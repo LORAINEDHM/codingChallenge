@@ -9,7 +9,8 @@ FROM amazoncorretto:11-alpine-jdk as builder
 WORKDIR /usr/src/app
 
 # copy source code to the working directory
-COPY ./src /usr/src/app
+COPY src /usr/src/app
+COPY resources /usr/src/app/
 
 # compile
 RUN javac Main.java
@@ -18,7 +19,7 @@ RUN javac Main.java
 # 'c' : create new archive
 # 'f' : specify archive file name (codingChallenge.jar)
 # 'e' : specify entrypoint
-RUN jar cfe codingChallenge.jar Main Main.class
+RUN jar cfe codingChallenge.jar Main Main.class LineReaderIterator.class user_events.csv
 
 ############################
 ##          RUN           ##
