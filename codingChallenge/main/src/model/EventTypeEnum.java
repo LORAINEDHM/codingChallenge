@@ -34,4 +34,20 @@ public enum EventTypeEnum {
         }
     }
 
+    public static boolean isUpdateType(EventTypeEnum typeEnum) {
+        switch (typeEnum) {
+            case USER_FIRSTNAME_UPDATED:
+            case USER_SURNAME_UPDATED:
+            case USER_EMAIL_UPDATED:
+            case USER_BIRTHDATE_UPDATED:
+            case USER_CITY_UPDATED:
+                return true;
+            default: return false;
+        }
+    }
+
+    public static boolean isCreateType(EventTypeEnum typeEnum) {
+        return typeEnum == USER_CREATED;
+    }
+
 }

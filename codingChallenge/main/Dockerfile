@@ -19,7 +19,7 @@ RUN javac Main.java
 # 'c' : create new archive
 # 'f' : specify archive file name (codingChallenge.jar)
 # 'e' : specify entrypoint
-RUN jar cfe codingChallenge.jar Main Main.class LineReaderIterator.class user_events.csv
+RUN jar cfe codingChallenge.jar Main Main.class service/LineReaderIterator.class service/LineProcessor.class service/Database.class model/Event.class model/EventTypeEnum.class model/User.class utils/DateUtils.class user_events.csv
 
 ############################
 ##          RUN           ##

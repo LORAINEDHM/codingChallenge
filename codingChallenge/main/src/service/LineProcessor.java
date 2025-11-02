@@ -1,0 +1,81 @@
+package service;
+
+import model.Event;
+import model.EventTypeEnum;
+import model.User;
+import utils.DateUtils;
+
+import java.util.UUID;
+
+public class LineProcessor {
+
+    public LineProcessor() {};
+
+    public Event parseLine(String line) {
+        String[] parts = this.parseColumns(line);
+        return this.parseContent(parts);
+    }
+
+    private String[] parseColumns(String line) {
+        String[] parts = line.split(";", 2);
+        if (parts.length != 2) {
+            throw new IllegalArgumentException("Invalid line: " + line);
+        }
+        return parts;
+    }
+
+    private Event parseContent(String[] parts) {
+        EventTypeEnum eventType = EventTypeEnum.fromValue(parts[0]);
+        System.out.println(eventType.getValue());
+        User user = this.parsePayload(parts[1]);
+        // if user == null -> do something
+        return new Event(eventType, user);
+    }
+
+    private User parsePayload(String json) {
+        json.trim();
+        json = this.removeBraces(json);
+          System.out.println(json);
+          System.out.println("\n");
+        String[] pairs = json.split(",");
+        User user = new User();
+        for (String pair: pairs) {
+            String[] kv = pair.split(":", 2);
+            String key = kv[0].trim().replace("\"", "");
+            String value = kv[1].trim().replace("\"", "");
+            if (key == null || value == null) {
+                return null;
+            }
+            switch (key) {
+                case "id":
+                    user.setId(UUID.fromString(value)); // add try catch
+                    break;
+                case "firstname":
+                    user.setFirstname(value);
+                    break;
+                case "surname":
+                    user.setSurname(value);
+                    break;
+                case "email":
+                    user.setEmail(value);
+                    break;
+                case "birthdate":
+                    user.setBirthdate(DateUtils.stringToDate(value)); // handle exception
+                    break;
+                case "city":
+                    user.setCity(value);
+                    break;
+                // check is only alpha
+            }
+        }
+        return user;
+    }
+
+
+    private String removeBraces(String json) {
+        if (json.startsWith("{") && json.endsWith("}")) {
+            return json.substring(1, json.length() - 1);
+        }
+        return json;
+    }
+}
