@@ -6,7 +6,7 @@
 # STEP 2: RUN THE TESTS
 
 ## OPTION 1 (using docker-compose):
-- **docker compose --profile test run --rm tester**
+- **docker compose --profile test run --rm --build tester**
 (The --rm flag cleans up the temporary test container after it finishes.)
 
 
