@@ -16,9 +16,7 @@ public class DatabaseValidator {
     }
 
     public static void validateAttributeToUpdate(Object value) {
-        System.out.println(value);
         if (value == null) {
-            System.out.println("HEY");
             throw new IllegalArgumentException("Attribute value to update is null.");
         }
     }

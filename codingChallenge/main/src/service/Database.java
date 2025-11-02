@@ -14,12 +14,13 @@ public class Database {
 
     public Database() {
         this.userList = new ArrayList<>();
-    };
+    }
 
 
     public void addUser(User userFromCSV) {
+        DatabaseValidator.validateUserData(userFromCSV);
         for (User user : this.userList) {
-            if (user.getId() == userFromCSV.getId()) {
+            if (user.getId().equals(userFromCSV.getId())) {
                 throw new IllegalStateException("User with id '" + user.getId() + "' already exists.");
             }
         }

@@ -1,5 +1,7 @@
 package test;
 
+import model.Event;
+import model.EventTypeEnum;
 import model.User;
 import service.Database;
 import test.utils.Assert;
@@ -10,6 +12,10 @@ import java.util.UUID;
 public class DatabaseTest {
 
     Database database = new Database();
+
+    private User userBuilder() {
+        return new User(UUID.randomUUID(), "firstName", "surname", "email", DateUtils.stringToDate("1963-01-23"), "city");
+    }
 
     public void addUser_ok() {
         int sizeList = database.getAllUsers().size();
@@ -32,12 +38,164 @@ public class DatabaseTest {
         Assert.assertEquals("User with id '" + id + "' already exists.", exception);
     }
 
-    // public void addUser_idMissing()
-    // public void addUser_birthdateMissing()
-    // public void addUser_emailMissing()
-    // public void addUser_firstnameMissing()
-    // public void addUser_surnameMissing()
-    // public void addUser_cityMissing()
+    public void addUser_idNull() {
+        User user = new User(null, "firstName", "surname", "email", DateUtils.stringToDate("1963-01-23"), "city");
+        String exception = null;
+        try {
+            database.addUser(user);
+        } catch (IllegalArgumentException e) {
+            exception = e.getMessage();
+        }
+        Assert.assertEquals("User data incomplete.", exception);
+    }
 
+    public void addUser_firstnameNull() {
+        User user = new User(UUID.randomUUID(), null, "surname", "email", DateUtils.stringToDate("1963-01-23"), "city");
+        String exception = null;
+        try {
+            database.addUser(user);
+        } catch (IllegalArgumentException e) {
+            exception = e.getMessage();
+        }
+        Assert.assertEquals("User data incomplete.", exception);
+    }
+
+    public void addUser_surnameNull() {
+        User user = new User(UUID.randomUUID(), "firstName", null, "email", DateUtils.stringToDate("1963-01-23"), "city");
+        String exception = null;
+        try {
+            database.addUser(user);
+        } catch (IllegalArgumentException e) {
+            exception = e.getMessage();
+        }
+        Assert.assertEquals("User data incomplete.", exception);
+    }
+
+    public void addUser_emailNull() {
+        User user = new User(UUID.randomUUID(), "firstname", "surname", null, DateUtils.stringToDate("1963-01-23"), "city");
+        String exception = null;
+        try {
+            database.addUser(user);
+        } catch (IllegalArgumentException e) {
+            exception = e.getMessage();
+        }
+        Assert.assertEquals("User data incomplete.", exception);
+    }
+
+    public void addUser_birthDateNull() {
+        User user = new User(UUID.randomUUID(), "firstname", "surname", "email", null, "city");
+        String exception = null;
+        try {
+            database.addUser(user);
+        } catch (IllegalArgumentException e) {
+            exception = e.getMessage();
+        }
+        Assert.assertEquals("User data incomplete.", exception);
+    }
+
+    public void addUser_cityNull() {
+        User user = new User(UUID.randomUUID(), "firstname", "surname", "email", DateUtils.stringToDate("1963-01-23"), null);
+        String exception = null;
+        try {
+            database.addUser(user);
+        } catch (IllegalArgumentException e) {
+            exception = e.getMessage();
+        }
+        Assert.assertEquals("User data incomplete.", exception);
+    }
+
+    public void updateUser_userNull() {
+        String exception = null;
+        Event event = new Event(EventTypeEnum.USER_EMAIL_UPDATED, null);
+        try {
+            database.updateUser(event);
+        } catch (IllegalArgumentException e) {
+            exception = e.getMessage();
+        }
+        Assert.assertEquals("Invalid line.", exception);
+    }
+
+    public void updateUser_userIdNull() {
+        String exception = null;
+        User user = userBuilder();
+        user.setId(null);
+        Event event = new Event(EventTypeEnum.USER_EMAIL_UPDATED, user);
+        try {
+            database.updateUser(event);
+        } catch (IllegalArgumentException e) {
+            exception = e.getMessage();
+        }
+        Assert.assertEquals("Invalid line.", exception);
+    }
+
+    public void updateUser_userFirstnameNull() {
+        String exception = null;
+        User user = userBuilder();
+        database.addUser(user);
+        user.setFirstname(null);
+        Event event = new Event(EventTypeEnum.USER_FIRSTNAME_UPDATED, user);
+        try {
+            database.updateUser(event);
+        } catch (IllegalArgumentException e) {
+            exception = e.getMessage();
+        }
+        Assert.assertEquals("Attribute value to update is null.", exception);
+    }
+
+    public void updateUser_userSurnameNull() {
+        String exception = null;
+        User user = userBuilder();
+        database.addUser(user);
+        user.setSurname(null);
+        Event event = new Event(EventTypeEnum.USER_SURNAME_UPDATED, user);
+        try {
+            database.updateUser(event);
+        } catch (IllegalArgumentException e) {
+            exception = e.getMessage();
+        }
+        Assert.assertEquals("Attribute value to update is null.", exception);
+    }
+
+    public void updateUser_userEmailNull() {
+        String exception = null;
+        User user = userBuilder();
+        database.addUser(user);
+        user.setEmail(null);
+        Event event = new Event(EventTypeEnum.USER_EMAIL_UPDATED, user);
+        try {
+            database.updateUser(event);
+        } catch (IllegalArgumentException e) {
+            exception = e.getMessage();
+        }
+        Assert.assertEquals("Attribute value to update is null.", exception);
+    }
+
+    public void updateUser_userBirthdateNull() {
+        String exception = null;
+        User user = userBuilder();
+        database.addUser(user);
+        user.setBirthdate(null);
+        Event event = new Event(EventTypeEnum.USER_BIRTHDATE_UPDATED, user);
+        try {
+            database.updateUser(event);
+        } catch (IllegalArgumentException e) {
+            exception = e.getMessage();
+        }
+        Assert.assertEquals("Attribute value to update is null.", exception);
+    }
+
+    public void updateUser_userCityNull() {
+        String exception = null;
+        User user = userBuilder();
+        database.addUser(user);
+        user.setCity(null);
+        Event event = new Event(EventTypeEnum.USER_CITY_UPDATED, user);
+        try {
+            database.updateUser(event);
+        } catch (IllegalArgumentException e) {
+            exception = e.getMessage();
+        }
+        Assert.assertEquals("Attribute value to update is null.", exception);
+    }
 
 }

@@ -36,7 +36,18 @@ public class TestRunner {
         System.out.println("\nTesting : databaseTest.addUser");
         databaseTest.addUser_ok();
         databaseTest.addUser_userAlreadyExists();
-
-
+        databaseTest.addUser_idNull();
+        databaseTest.addUser_firstnameNull();
+        databaseTest.addUser_surnameNull();
+        databaseTest.addUser_emailNull();
+        databaseTest.addUser_birthDateNull();
+        databaseTest.addUser_cityNull();
+        databaseTest.updateUser_userNull();
+        databaseTest.updateUser_userIdNull();
+        databaseTest.updateUser_userFirstnameNull();
+        databaseTest.updateUser_userSurnameNull();
+        databaseTest.updateUser_userEmailNull();
+        databaseTest.updateUser_userBirthdateNull();
+        databaseTest.updateUser_userCityNull();
     }
 }

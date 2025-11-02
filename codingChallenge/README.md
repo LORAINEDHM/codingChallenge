@@ -21,8 +21,13 @@ Example of logs :
 
 # STEP 4: ACCESS THE API
 
-curl http://localhost:8080/users/1
-use java.net.ServerSocket
+The server starts after the csv data has finished downloading.
+
+Endpoints:
+- All users: GET http://localhost:8080/api/users
+- User by ID: GET http://localhost:8080/api/users/{uuid}
+- Count by city: GET http://localhost:8080/api/users/countByCity?city={name}
+
 
 # STEP 5: STOP THE APPLICATION
 

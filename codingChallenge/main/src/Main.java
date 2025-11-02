@@ -30,7 +30,6 @@ public class Main {
                 event = processor.parseLine(line);
                     // Step 3 : update database
                 if (EventTypeEnum.isCreateType(event.getEventType())) {
-                    DatabaseValidator.validateUserData(event.getUser());
                     database.addUser(event.getUser());
                 }
                 else if (EventTypeEnum.isUpdateType(event.getEventType())) {

@@ -46,6 +46,5 @@ EXPOSE 8080
 
 # copy the executable from the 'build' step
 COPY --from=builder /usr/src/app/codingChallenge.jar /usr/app/codingChallenge.jar
-# copy config file here
 
 CMD ["java", "-jar", "/usr/app/codingChallenge.jar"]
