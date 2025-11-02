@@ -20,8 +20,11 @@ public class Main {
         Database database = new Database();
 
         Logger logger = setupLogger();
+        int lineCounter = 0;
+
         // Step 1 : read the line
         String line = reader.getNextLine();
+        lineCounter++;
         while (line != null) {
             //System.out.println("line: " + line);
 
@@ -39,10 +42,11 @@ public class Main {
                     } else
                         throw new IllegalArgumentException("Unknown event type: '" + event.getEventType() + "'.");
                 } catch (IllegalArgumentException | IllegalStateException | NoSuchElementException e) {
-                    logger.log(Level.SEVERE, "An issue occurs with line: '" + line + "'. Error: " + e.getMessage());
+                    logger.log(Level.SEVERE, "An issue occurs in line " + lineCounter + " : '" + line + "'. Error: " + e.getMessage());
                 }
             }
             line = reader.getNextLine();
+            lineCounter++;
         }
 
         // Run API server

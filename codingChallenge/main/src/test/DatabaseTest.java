@@ -211,7 +211,6 @@ public class DatabaseTest {
     }
 
     public void updateUser_OK() {
-        String exception = null;
         User user = userBuilder();
         database.addUser(user);
         user.setCity("newCity");
