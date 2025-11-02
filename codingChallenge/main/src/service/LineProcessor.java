@@ -17,7 +17,7 @@ public class LineProcessor {
     }
 
     private String[] parseColumns(String line) {
-        String[] parts = line.split(";", 2);
+        String[] parts = line.split(";");
         if (parts.length != 2) {
             throw new IllegalArgumentException("Invalid line: " + line);
         }
@@ -26,7 +26,7 @@ public class LineProcessor {
 
     private Event parseContent(String[] parts) {
         EventTypeEnum eventType = EventTypeEnum.fromValue(parts[0]);
-        System.out.println(eventType.getValue());
+       //System.out.println(eventType.getValue());
         User user = this.parsePayload(parts[1]);
         // if user == null -> do something
         return new Event(eventType, user);
@@ -35,8 +35,8 @@ public class LineProcessor {
     private User parsePayload(String json) {
         json.trim();
         json = this.removeBraces(json);
-          System.out.println(json);
-          System.out.println("\n");
+         //System.out.println(json);
+         //System.out.println("\n");
         String[] pairs = json.split(",");
         User user = new User();
         for (String pair: pairs) {

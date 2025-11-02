@@ -20,7 +20,7 @@ public class Database {
     public void addUser(User userFromCSV) {
         for (User user : this.userList) {
             if (user.getId() == userFromCSV.getId()) {
-                throw new IllegalStateException("User with id " + user.getId() + "already exists");
+                throw new IllegalStateException("User with id " + user.getId() + " already exists");
             }
         }
         this.userList.add(userFromCSV);

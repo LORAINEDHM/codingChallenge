@@ -1,0 +1,24 @@
+version: '3.9'
+services:
+
+  # 1. APPLICATION SERVICE (Runs the final JAR)
+  app:
+    build:
+      context: .
+      # Specifies that for this service, the Dockerfile should stop at the 'runtime' stage
+      target: runtime
+    container_name: coding_challenge_app
+    ports:
+      - "8080:8080"
+    # This executes the CMD from the 'runtime' stage (java -jar ...)
+
+  # 2. TEST SERVICE (Runs the unit tests)
+  tester:
+    build:
+      context: .
+      # Specifies that for this service, the Dockerfile should stop at the 'tester' stage
+      target: tester
+    container_name: coding_challenge_tests
+    profiles:
+      - test
+    restart: 'no' # Do not restart tests if they fail

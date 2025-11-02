@@ -1,4 +1,5 @@
 import model.Event;
+import model.EventTypeEnum;
 import service.Database;
 import service.LineProcessor;
 import service.LineReaderIterator;

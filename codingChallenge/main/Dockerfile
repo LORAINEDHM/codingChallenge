@@ -13,13 +13,25 @@ COPY src /usr/src/app
 COPY resources /usr/src/app/
 
 # compile
-RUN javac Main.java
+RUN javac $(find . -name "*.java")
 
 # create executable JAR file
 # 'c' : create new archive
 # 'f' : specify archive file name (codingChallenge.jar)
 # 'e' : specify entrypoint
 RUN jar cfe codingChallenge.jar Main Main.class service/LineReaderIterator.class service/LineProcessor.class service/Database.class model/Event.class model/EventTypeEnum.class model/User.class utils/DateUtils.class user_events.csv
+
+############################
+##        TESTS           ##
+############################
+
+RUN echo "Testing..."
+FROM amazoncorretto:11-alpine-jdk as tester
+
+WORKDIR /usr/src/app
+COPY --from=builder /usr/src/app /usr/src/app
+
+ENTRYPOINT ["java", "-classpath", ".", "test.TestRunner"]
 
 ############################
 ##          RUN           ##
