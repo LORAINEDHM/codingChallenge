@@ -51,5 +51,7 @@ public class TestRunner {
         databaseTest.updateUser_userCityNull();
         databaseTest.updateUser_userNotFoundInDB();
         databaseTest.updateUser_OK();
+        databaseTest.getNumberOfUsersByCity_EmptyListOk();
+        databaseTest.getNumberOfUsersByCity_Ok();
     }
 }

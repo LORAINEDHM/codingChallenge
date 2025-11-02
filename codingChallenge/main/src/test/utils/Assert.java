@@ -44,7 +44,7 @@ public class Assert {
             System.out.println(printSuccess());
     }
 
-    public static void assertEquals(int expected, int actual) {
+    public static void assertEquals(long expected, long actual) {
         if (!(expected == actual))
             System.out.println(printFail() + " Expected: '" + expected + "'  /  Actual: '" + actual + "'");
         else

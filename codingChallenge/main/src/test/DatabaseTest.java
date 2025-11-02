@@ -221,4 +221,24 @@ public class DatabaseTest {
         Assert.assertEquals(user.getCity(), result.getCity());
     }
 
+    public void getNumberOfUsersByCity_EmptyListOk() {
+        Database database = new Database();
+        long result = database.getNumberOfUsersByCity("Namur");
+        Assert.assertEquals(0L, result);
+    }
+
+    public void getNumberOfUsersByCity_Ok() {
+        Database database = new Database();
+        User user1 = userBuilder();
+        database.addUser(user1);
+        User user2 = userBuilder();
+        user2.setCity("Londres");
+        database.addUser(user2);
+        User user3 = userBuilder();
+        database.addUser(user3);
+
+        long result = database.getNumberOfUsersByCity(user1.getCity());
+        Assert.assertEquals(2L, result);
+    }
+
 }
