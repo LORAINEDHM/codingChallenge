@@ -33,31 +33,31 @@ public class Database {
         }
         boolean isFound = false;
         for (User user : this.userList) {
-            if (user.getId() == userFromCSV.getId()) {
+            if (user.getId().equals(userFromCSV.getId())) {
                 isFound = true;
                 switch (event.getEventType()) {
-                    case USER_FIRSTNAME_UPDATED -> {
+                    case USER_FIRSTNAME_UPDATED:
                         DatabaseValidator.validateAttributeToUpdate(userFromCSV.getFirstname());
                         user.setFirstname(userFromCSV.getFirstname());
-                    }
-                    case USER_SURNAME_UPDATED -> {
+                        break;
+                    case USER_SURNAME_UPDATED:
                         DatabaseValidator.validateAttributeToUpdate(userFromCSV.getSurname());
                         user.setSurname(userFromCSV.getSurname());
-                    }
-                    case USER_EMAIL_UPDATED -> {
+                        break;
+                    case USER_EMAIL_UPDATED:
                         DatabaseValidator.validateAttributeToUpdate(userFromCSV.getEmail());
                         user.setEmail(userFromCSV.getEmail());
-                    }
-                    case USER_BIRTHDATE_UPDATED -> {
+                        break;
+                    case USER_BIRTHDATE_UPDATED:
                         DatabaseValidator.validateAttributeToUpdate(userFromCSV.getBirthdate());
                         user.setBirthdate(userFromCSV.getBirthdate());
-                    }
-                    case USER_CITY_UPDATED -> {
+                        break;
+                    case USER_CITY_UPDATED:
                         DatabaseValidator.validateAttributeToUpdate(userFromCSV.getCity());
                         user.setCity(userFromCSV.getCity());
-                    }
-                    default ->
-                            throw new IllegalArgumentException("Unknown event type: '" + event.getEventType() + "'.");
+                        break;
+                    default:
+                        throw new IllegalArgumentException("Unknown event type: '" + event.getEventType() + "'.");
                 }
             }
         }
@@ -70,7 +70,7 @@ public class Database {
             throw new IllegalArgumentException("Id is null.");
         }
         for (User user : this.userList) {
-            if (user.getId() == id) {
+            if (user.getId().equals(id)) {
                 return user;
             }
         }

@@ -50,14 +50,26 @@ public class LineProcessor {
                 throw new IllegalArgumentException("Invalid line.");
             }
             switch (key.toLowerCase()) {
-                case "id" -> user.setId(UUID.fromString(value));
-                case "firstname" -> user.setFirstname(value);
-                case "surname" -> user.setSurname(value);
-                case "email" -> user.setEmail(value);
-                case "birthdate" -> user.setBirthdate(DateUtils.stringToDate(value));
-                case "city" -> user.setCity(value);
-                default -> throw new IllegalArgumentException("Unknown attribute: '" + key + "'.");
-
+                case "id":
+                    user.setId(UUID.fromString(value));
+                    break;
+                case "firstname":
+                    user.setFirstname(value);
+                    break;
+                case "surname":
+                    user.setSurname(value);
+                    break;
+                case "email":
+                    user.setEmail(value);
+                    break;
+                case "birthdate":
+                    user.setBirthdate(DateUtils.stringToDate(value));
+                    break;
+                case "city":
+                    user.setCity(value);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown attribute: '" + key + "'.");
                 // check is only alpha
             }
         }

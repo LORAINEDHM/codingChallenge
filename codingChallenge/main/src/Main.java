@@ -1,9 +1,6 @@
 import model.Event;
 import model.EventTypeEnum;
-import service.Database;
-import service.DatabaseValidator;
-import service.LineProcessor;
-import service.LineReaderIterator;
+import service.*;
 
 import java.io.IOException;
 import java.util.NoSuchElementException;
@@ -47,6 +44,8 @@ public class Main {
 
             line = reader.getNextLine();
         }
+        ApiServer apiServer = new ApiServer(database);
+        apiServer.setUp();
         // Ensure all log records are flushed to the file before exiting
         for (Handler handler : logger.getHandlers()) {
             handler.close();

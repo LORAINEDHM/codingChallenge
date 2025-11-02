@@ -1,5 +1,6 @@
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -70,6 +71,14 @@ public class User {
         this.city = city;
     }
 
+    public String toJson() {
+        String formattedDate = new SimpleDateFormat("yyyy-MM-dd").format(this.birthdate);
+
+        return String.format(
+                "{\"id\":\"%s\", \"firstname\":\"%s\", \"surname\":\"%s\", \"email\":\"%s\", \"birthdate\":\"%s\", \"city\":\"%s\"}",
+                id.toString(), firstname, surname, email, formattedDate, city
+        );
+    }
 
 }
 
