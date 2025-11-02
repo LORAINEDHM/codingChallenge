@@ -7,6 +7,10 @@ services:
       context: .
       # Specifies that for this service, the Dockerfile should stop at the 'runtime' stage
       target: runtime
+    volumes:
+      - ./logs:/app/logs
+    environment:
+      - LOG_PATH=/app/logs/application.log
     container_name: coding_challenge_app
     ports:
       - "8080:8080"
