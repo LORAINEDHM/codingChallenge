@@ -29,7 +29,7 @@ public class DatabaseTest {
         } catch (IllegalStateException e) {
             exception = e.getMessage();
         }
-        Assert.assertEquals("User with id " + id + " already exists", exception);
+        Assert.assertEquals("User with id '" + id + "' already exists.", exception);
     }
 
     // public void addUser_idMissing()

@@ -14,8 +14,7 @@ public class DateUtils {
             LocalDate localDate = LocalDate.parse(dateStr, formatter);
             return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         } catch (DateTimeParseException e) {
-            //System.err.println("Error: The string '" + dateStr + "' could not be converted to a date.");
-            throw new IllegalArgumentException("The string '" + dateStr + "' could not be converted to a date.");
+            throw new IllegalArgumentException("The string '" + dateStr + "' could not be converted into a date.");
         }
     }
 }

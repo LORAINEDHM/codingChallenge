@@ -26,11 +26,17 @@ public class TestRunner {
         lineProcessorTest.parseLine_UnknownEventType();
         lineProcessorTest.parseLine_idWrongFormat();
         lineProcessorTest.parseLine_dateWrongFormat();
+        lineProcessorTest.parseLine_UnknownAttribute();
+        lineProcessorTest.parseLine_AttributeKeyMissing();
+        lineProcessorTest.parseLine_AttributeKeyEmpty();
+        lineProcessorTest.parseLine_AttributeValueMissing();
+        lineProcessorTest.parseLine_AttributeValueEmpty();
 
         DatabaseTest databaseTest = new DatabaseTest();
         System.out.println("\nTesting : databaseTest.addUser");
         databaseTest.addUser_ok();
         databaseTest.addUser_userAlreadyExists();
+
 
     }
 }

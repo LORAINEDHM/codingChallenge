@@ -12,24 +12,27 @@ public class LineProcessor {
     public LineProcessor() {};
 
     public Event parseLine(String line) {
-        String[] parts = this.parseColumns(line);
-        return this.parseContent(parts);
+        try {
+            String[] parts = this.parseColumns(line);
+            return this.parseContent(parts);
+        } catch(IllegalArgumentException e) {
+            throw e;
+        }
     }
 
     private String[] parseColumns(String line) {
         String[] parts = line.split(";");
         if (parts.length != 2) {
-            throw new IllegalArgumentException("Invalid line: " + line);
+            throw new IllegalArgumentException("Invalid line.");
         }
         return parts;
     }
 
     private Event parseContent(String[] parts) {
-        EventTypeEnum eventType = EventTypeEnum.fromValue(parts[0]);
-       //System.out.println(eventType.getValue());
-        User user = this.parsePayload(parts[1]);
-        // if user == null -> do something
-        return new Event(eventType, user);
+            EventTypeEnum eventType = EventTypeEnum.fromValue(parts[0]);
+            //System.out.println(eventType.getValue());
+            User user = this.parsePayload(parts[1]);
+            return new Event(eventType, user);
     }
 
     private User parsePayload(String json) {
@@ -43,28 +46,18 @@ public class LineProcessor {
             String[] kv = pair.split(":", 2);
             String key = kv[0].trim().replace("\"", "");
             String value = kv[1].trim().replace("\"", "");
-            if (key == null || value == null) {
-                return null;
+            if (key.isEmpty() || value.isEmpty()) {
+                throw new IllegalArgumentException("Invalid line.");
             }
-            switch (key) {
-                case "id":
-                    user.setId(UUID.fromString(value)); // add try catch
-                    break;
-                case "firstname":
-                    user.setFirstname(value);
-                    break;
-                case "surname":
-                    user.setSurname(value);
-                    break;
-                case "email":
-                    user.setEmail(value);
-                    break;
-                case "birthdate":
-                    user.setBirthdate(DateUtils.stringToDate(value)); // handle exception
-                    break;
-                case "city":
-                    user.setCity(value);
-                    break;
+            switch (key.toLowerCase()) {
+                case "id" -> user.setId(UUID.fromString(value));
+                case "firstname" -> user.setFirstname(value);
+                case "surname" -> user.setSurname(value);
+                case "email" -> user.setEmail(value);
+                case "birthdate" -> user.setBirthdate(DateUtils.stringToDate(value));
+                case "city" -> user.setCity(value);
+                default -> throw new IllegalArgumentException("Unknown attribute: '" + key + "'.");
+
                 // check is only alpha
             }
         }
