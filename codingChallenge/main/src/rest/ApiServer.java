@@ -1,7 +1,7 @@
-package service;
+package rest;
 
 import com.sun.net.httpserver.HttpServer;
-import rest.UserHandler;
+import service.Database;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

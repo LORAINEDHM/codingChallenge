@@ -1,5 +1,6 @@
 import model.Event;
 import model.EventTypeEnum;
+import rest.ApiServer;
 import service.*;
 
 import java.io.IOException;
@@ -24,28 +25,31 @@ public class Main {
         while (line != null) {
             //System.out.println("line: " + line);
 
-            // Step 2 : parse the line
-            Event event = null;
-            try {
-                event = processor.parseLine(line);
-                    // Step 3 : update database
-                if (EventTypeEnum.isCreateType(event.getEventType())) {
-                    database.addUser(event.getUser());
-                }
-                else if (EventTypeEnum.isUpdateType(event.getEventType())) {
-                    database.updateUser(event);
-                }
-                else
-                    throw new IllegalArgumentException("Unknown event type: '" + event.getEventType() + "'.");
-            } catch(IllegalArgumentException | IllegalStateException | NoSuchElementException e) {
-                logger.log(Level.SEVERE, "An issue occurs with line: '" + line +"'. Error: " + e.getMessage());
-            }
+            if (!line.isEmpty()) {
+                // Step 2 : parse the line
+                Event event = null;
+                try {
+                    event = processor.parseLine(line);
 
+                    // Step 3 : update database
+                    if (EventTypeEnum.isCreateType(event.getEventType())) {
+                        database.addUser(event.getUser());
+                    } else if (EventTypeEnum.isUpdateType(event.getEventType())) {
+                        database.updateUser(event);
+                    } else
+                        throw new IllegalArgumentException("Unknown event type: '" + event.getEventType() + "'.");
+                } catch (IllegalArgumentException | IllegalStateException | NoSuchElementException e) {
+                    logger.log(Level.SEVERE, "An issue occurs with line: '" + line + "'. Error: " + e.getMessage());
+                }
+            }
             line = reader.getNextLine();
         }
+
+        // Run API server
         ApiServer apiServer = new ApiServer(database);
         apiServer.setUp();
-        // Ensure all log records are flushed to the file before exiting
+
+        // Ensure all log records are flushed to the log file before exiting
         for (Handler handler : logger.getHandlers()) {
             handler.close();
         }

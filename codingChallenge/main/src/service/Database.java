@@ -81,4 +81,11 @@ public class Database {
     public List<User> getAllUsers() {
         return this.userList;
     }
+
+    public long getNumberOfUsersByCity(String city) {
+        return this.userList.stream()
+                .filter(u -> city.equalsIgnoreCase(u.getCity()))
+                .count();
+
+    }
 }

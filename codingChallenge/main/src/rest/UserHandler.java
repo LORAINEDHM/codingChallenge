@@ -33,9 +33,7 @@ public class UserHandler implements HttpHandler {
             if ("GET".equals(exchange.getRequestMethod())) {
 
                 if (path.equals(BASE_PATH + "/countByCity") && query != null) {
-                   // response = handleCountByCity(query);
-                    response = null;
-                    System.out.println("by city");
+                   response = handleCountByCity(query);
 
                 } else if (path.startsWith(BASE_PATH + "/") && !path.equals(BASE_PATH + "/")) {
                     response = handleGetUserById(path);
@@ -98,5 +96,26 @@ public class UserHandler implements HttpHandler {
                 .map(User::toJson)
                 .collect(Collectors.joining(","));
         return "[" + jsonUsers + "]";
+    }
+
+    /**
+     * Endpoint: GET /api/users/countByCity?city={name}
+     * Retrieve the number of users by city
+     */
+    private String handleCountByCity(String query) {
+        if (query != null && query.toLowerCase().startsWith("city=")) {
+            String cityValue = query.substring(5);
+            // Simple URL decode (replace %20 with space)
+            String city = cityValue.replace("%20", " ");
+            if (city.isEmpty()) {
+                return "{\"error\":\"City parameter cannot be empty\"}";
+            }
+
+            long count = this.database.getNumberOfUsersByCity(city);
+            return String.format("{\"city\":\"%s\", \"count\":%d}", city, count);
+        } else {
+            // If query is null or doesn't start with "city="
+            return "{\"error\":\"Missing required query parameter: city\"}";
+        }
     }
 }
