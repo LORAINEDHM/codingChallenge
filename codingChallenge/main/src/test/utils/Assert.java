@@ -30,6 +30,13 @@ public class Assert {
             System.out.println(printSuccess());
     }
 
+    public static void assertNotNull(Object obj) {
+        if (obj == null)
+            System.out.println(printFail());
+        else
+            System.out.println(printSuccess());
+    }
+
     public static void assertEquals(String expected, String actual) {
         if (expected == null || !expected.equals(actual))
             System.out.println(printFail() + " Expected: '" + expected + "'  /  Actual: '" + actual + "'");
@@ -47,23 +54,18 @@ public class Assert {
     public static void assertEquals(Event expected, Event actual) {
         if (actual == null) {
             System.out.println(printFail());
-            return;
         }
         else if (!expected.getEventType().equals(actual.getEventType())) {
             System.out.println(printFail() + " Expected: '" + expected.getEventType() + "'  /  Actual: '" + actual.getEventType() + "'");
-            return;
         }
         if (expected == null && actual == null) {
             System.out.println(printSuccess());
-            return;
         }
         else if (expected != null && actual == null) {
             System.out.println(printFail() + " Expected: '" + expected.getUser() + "'  /  Actual: '" + actual.getUser() + "'");
-            return;
         }
         else if (expected == null && actual != null) {
             System.out.println(printFail() + " user ->     Expected: '" + expected.getUser() + "'  /  Actual: '" + actual.getUser() + "'");
-            return;
         }
         else if (!expected.getUser().getId().equals(actual.getUser().getId())) {
             System.out.println(printFail()+ " id ->     Expected: '" + expected.getUser().getId() + "'  /  Actual: '" + actual.getUser().getId() + "'");

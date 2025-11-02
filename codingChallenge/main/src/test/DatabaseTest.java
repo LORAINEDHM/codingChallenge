@@ -198,4 +198,28 @@ public class DatabaseTest {
         Assert.assertEquals("Attribute value to update is null.", exception);
     }
 
+    public void updateUser_userNotFoundInDB() {
+        String exception = null;
+        User user = userBuilder();
+        Event event = new Event(EventTypeEnum.USER_CITY_UPDATED, user);
+        try {
+            database.updateUser(event);
+        } catch (IllegalStateException e) {
+            exception = e.getMessage();
+        }
+        Assert.assertEquals("User to update with id '" + user.getId() + "' not found in database.", exception);
+    }
+
+    public void updateUser_OK() {
+        String exception = null;
+        User user = userBuilder();
+        database.addUser(user);
+        user.setCity("newCity");
+        Event event = new Event(EventTypeEnum.USER_CITY_UPDATED, user);
+        database.updateUser(event);
+        User result = database.getUserById(user.getId());
+        Assert.assertNotNull(result);
+        Assert.assertEquals(user.getCity(), result.getCity());
+    }
+
 }

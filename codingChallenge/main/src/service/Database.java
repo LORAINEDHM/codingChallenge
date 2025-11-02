@@ -29,7 +29,7 @@ public class Database {
 
     public void updateUser(Event event) {
         User userFromCSV = event.getUser();
-        if (userFromCSV == null || userFromCSV.getId() == null) {  // ADD TEST
+        if (userFromCSV == null || userFromCSV.getId() == null) {
             throw new IllegalArgumentException("Invalid line.");
         }
         boolean isFound = false;

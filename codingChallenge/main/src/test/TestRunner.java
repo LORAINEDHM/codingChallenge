@@ -49,5 +49,7 @@ public class TestRunner {
         databaseTest.updateUser_userEmailNull();
         databaseTest.updateUser_userBirthdateNull();
         databaseTest.updateUser_userCityNull();
+        databaseTest.updateUser_userNotFoundInDB();
+        databaseTest.updateUser_OK();
     }
 }
