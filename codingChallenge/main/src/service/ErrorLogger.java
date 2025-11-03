@@ -36,6 +36,7 @@ public class ErrorLogger {
 
         } catch (IOException e) {
             // If the file cannot be created or written to, print the error to console
+            logger.setUseParentHandlers(true);
             System.err.println("Fatal: Could not set up file logging handler.");
             e.printStackTrace();
         }
