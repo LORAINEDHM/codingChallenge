@@ -17,16 +17,13 @@ public class ErrorLogger {
         try {
 
             logger.setUseParentHandlers(false);
-            // 1. Remove default handlers (like ConsoleHandler) to only use the file.
-            // (Optional: If you want console output too, skip this step)
-
+            // Remove default handlers (like ConsoleHandler) to only use the file.
             for (Handler handler : logger.getHandlers()) {
                 logger.removeHandler(handler);
             }
 
             // to append logs to the file instead of overwriting it each time
             FileHandler fileHandler = new FileHandler(LOG_FILE, true);
-            //FileHandler fileHandler = new FileHandler(LOG_FILE, 0, 1, true);
 
             fileHandler.setLevel(Level.ALL);
 

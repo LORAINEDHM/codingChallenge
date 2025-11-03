@@ -30,7 +30,6 @@ public class LineProcessor {
 
     private Event parseContent(String[] parts) {
             EventTypeEnum eventType = EventTypeEnum.fromValue(parts[0]);
-            //System.out.println(eventType.getValue());
             User user = this.parsePayload(parts[1]);
             return new Event(eventType, user);
     }
@@ -38,8 +37,6 @@ public class LineProcessor {
     private User parsePayload(String json) {
         json.trim();
         json = this.removeBraces(json);
-         //System.out.println(json);
-         //System.out.println("\n");
         String[] pairs = json.split(",");
         User user = new User();
         for (String pair: pairs) {
@@ -70,7 +67,6 @@ public class LineProcessor {
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown attribute: '" + key + "'.");
-                // check is only alpha
             }
         }
         return user;

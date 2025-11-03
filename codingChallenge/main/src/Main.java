@@ -14,7 +14,7 @@ import static service.ErrorLogger.setupLogger;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        // read csvFile
+
         LineReaderIterator reader = new LineReaderIterator();
         LineProcessor processor = new LineProcessor();
         Database database = new Database();
@@ -26,14 +26,11 @@ public class Main {
         String line = reader.getNextLine();
         lineCounter++;
         while (line != null) {
-            //System.out.println("line: " + line);
-
             if (!line.isEmpty()) {
                 // Step 2 : parse the line
                 Event event = null;
                 try {
                     event = processor.parseLine(line);
-
                     // Step 3 : update database
                     if (EventTypeEnum.isCreateType(event.getEventType())) {
                         database.addUser(event.getUser());
@@ -42,7 +39,7 @@ public class Main {
                     } else
                         throw new IllegalArgumentException("Unknown event type: '" + event.getEventType() + "'.");
                 } catch (IllegalArgumentException | IllegalStateException | NoSuchElementException e) {
-                    logger.log(Level.SEVERE, "An issue occurs in line " + lineCounter + " : '" + line + "'. Error: " + e.getMessage());
+                    logger.log(Level.SEVERE, "An issue occurred in line " + lineCounter + " : '" + line + "'. Error: " + e.getMessage());
                 }
             }
             line = reader.getNextLine();

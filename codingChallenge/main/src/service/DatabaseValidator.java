@@ -20,6 +20,4 @@ public class DatabaseValidator {
             throw new IllegalArgumentException("Attribute value to update is null.");
         }
     }
-
-    // ADD METHOD TO HANDLE UPDATE DATA
 }

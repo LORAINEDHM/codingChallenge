@@ -86,11 +86,6 @@ public class LineProcessorTest {
         Assert.assertEquals("The string '"+ "1963-janv-23' could not be converted into a date.", exception);
     }
 
-    // public void addUser_emailWrongFormat()
-    // public void addUser_firstnameWrongFormat()
-    // public void addUser_surnameWrongFormat()
-    // public void addUser_cityWrongFormat()
-
     public void parseLine_UnknownAttribute() {
 
         Event expected = new Event();
